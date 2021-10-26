@@ -21,7 +21,7 @@ export default function Home() {
                         </div>
 
                     </div>
-                    <div className="text-center my-64">
+                    <div className="text-center mt-64">
                         Incomplete login form. Just for practising Routing in React.
                     </div>
                 </div>

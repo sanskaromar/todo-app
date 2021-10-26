@@ -9,7 +9,7 @@ export default function Todos() {
     for (let i = 0; i < tasks.length; i++) {
         addTasks.push(
             <>
-                <div className="flex flex-row mb-2 w-full items-center">
+                <div className="flex flex-row mb-2 w-full items-center md:w-2/3 lg:w-1/2">
                     {(status[i] === 0) ?
                         <input type="checkbox" class="form-checkbox rounded h-6 w-6 mx-2 text-gray-800 bg-gray-700 border-blue-300 border-2 "
                             onClick={(e) => {
@@ -53,7 +53,7 @@ export default function Todos() {
     }
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
             {addTasks}
             <button
                 className='h-10 w-10 mx-auto text-white text-4xl  hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 rounded-full flex-shrink-0'
