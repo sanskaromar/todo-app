@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Todo from './pages/todo'
+import Home from './pages/home'
+import ErrorPage from './pages/pageNotFound'
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <BrowserRouter>
+      <header className="text-center text-4xl p-8 font-mono bg-gray-900 text-gray-200">
+        To Do App
       </header>
-    </div>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/todo" component={Todo} exact />
+        <Route component={ErrorPage} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
