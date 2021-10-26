@@ -55,6 +55,7 @@ export default function Todos() {
     return (
         <div className="flex flex-col items-center">
             {addTasks}
+            {/* Add more tasks fields button */}
             <button
                 className='h-10 w-10 mx-auto text-white text-4xl  hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 rounded-full flex-shrink-0'
                 onClick={() => {
