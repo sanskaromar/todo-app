@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 export default function Todos() {
-    const [tasks, setTasks] = useState(["Add your first Task", "Track progress with checkbox", "Delete tasks when not required", "", ""])
-    const [status, setStatus] = useState([1, 1, 0, 0, 0])
+    const [tasks, setTasks] = useState([])
+    const [status, setStatus] = useState([])
     const addTasks = []
 
     for (let i = 0; i < tasks.length; i++) {
@@ -52,8 +52,37 @@ export default function Todos() {
         )
     }
 
+    Storage.prototype.setObj = function (key, obj) {
+        return this.setItem(key, JSON.stringify(obj))
+    }
+    Storage.prototype.getObj = function (key) {
+        return JSON.parse(this.getItem(key))
+    }
+
+    const handleClick = () => {
+        localStorage.setObj("tasks", tasks);
+        localStorage.setObj("status", status);
+    }
+
+    useEffect(() => {
+        if (localStorage.getObj("tasks") && localStorage.getObj("status")) {
+            setTasks(localStorage.getObj("tasks"));
+            setStatus(localStorage.getObj("status"));
+        }
+        else {
+            setTasks(["Add your first Task", "Track progress with checkbox", "Delete tasks when not required", "", ""]);
+            setStatus([1, 1, 0, 0, 0]);
+        }
+    }, [])
+
+
     return (
         <div className="flex flex-col items-center">
+            <button
+                className='mx-auto p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+                onClick={handleClick}>
+                Save
+            </button>
             {addTasks}
             {/* Add more tasks fields button */}
             <button
