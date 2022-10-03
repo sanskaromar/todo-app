@@ -10,7 +10,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <header className="text-center text-4xl p-8 font-mono bg-gray-900 text-gray-200">
+      <header className="text-center text-5xl p-8 font-mono bg-gray-700 text-red-500">
         To Do App
       </header>
       <Switch>
