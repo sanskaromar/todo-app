@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
-
+import {useHistory} from 'react-router-dom'
 
 export default function Todos() {
+    const history = useHistory()
     const [tasks, setTasks] = useState([])
     const [status, setStatus] = useState([])
     const addTasks = []
@@ -64,6 +65,17 @@ export default function Todos() {
         localStorage.setObj("status", status);
     }
 
+    const clear = (e) => {
+        localStorage.clear()
+        setTasks(["Add your first Task", "Track progress with checkbox", "Delete tasks when not required", "", ""]);
+        setStatus([1, 1, 0, 0, 0]);
+    }
+
+    const signOut = () => {
+        localStorage.clear()
+        history.push("/")
+    }
+
     useEffect(() => {
         if (localStorage.getObj("tasks") && localStorage.getObj("status")) {
             setTasks(localStorage.getObj("tasks"));
@@ -78,11 +90,19 @@ export default function Todos() {
 
     return (
         <div className="flex flex-col items-center">
-            <button
-                className='mx-auto p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
-                onClick={handleClick}>
-                Save
-            </button>
+            <div className="flex-row">
+                <button
+                    className = 'mx-3 p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+                    onClick = {handleClick}>
+                    Save
+                </button>
+                <button
+                    className = 'mx-3 p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+                    onClick = {clear}>
+                    Clear
+                </button>
+            </div>
+
             {addTasks}
             {/* Add more tasks fields button */}
             <button
@@ -93,6 +113,11 @@ export default function Todos() {
                 }
                 }>
                 +
+            </button>
+            <button
+                className = 'mx-3 p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+                onClick = {signOut}>
+                Sign Out
             </button>
         </div>
 
