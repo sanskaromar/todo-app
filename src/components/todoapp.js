@@ -21,7 +21,7 @@ export default function Todos() {
                             }} />
                     }
 
-                    <input className="w-full rounded-2xl border-4 border-blue-300 px-2 py-1 text-blue-50 bg-gray-700 focus:bg-gray-900 focus:text-white focus:border-blue-200 text-3xl"
+                    <input className="w-full rounded-2xl border-4 border-blue-300 px-2 py-1 text-blue-50 bg-gray-500 focus:bg-gray-600 focus:text-white focus:border-blue-200 text-3xl"
                         type="text" value={tasks[i]}
                         placeholder={`Add a new task`}
                         onChange={(e) => {
@@ -31,7 +31,7 @@ export default function Todos() {
                     {/* Delete Button */}
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
-                        className='h-10 w-10 px-2 hover:bg-red-600 cursor-pointer bg-gray-100 bg-opacity-0 rounded-full flex-shrink-0'
+                        className='h-10 w-10 px-2 hover:bg-red-600 cursor-pointer bg-gray-900 bg-opacity-0 rounded-full flex-shrink-0'
                         fill='none'
                         viewBox='0 0 24 24'
                         stroke='white'
