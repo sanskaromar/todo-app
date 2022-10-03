@@ -21,7 +21,7 @@ export default function Todos() {
                             }} />
                     }
 
-                    <input className="w-full rounded-2xl border-4 border-blue-300 px-2 py-1 text-blue-50 bg-gray-500 focus:bg-gray-600 focus:text-white focus:border-blue-200 text-3xl"
+                    <input className="w-full rounded-2xl border-4 border-blue-300 px-2 py-1 text-blue-50 bg-gray-300 focus:bg-gray-400 focus:text-white focus:border-blue-200 text-3xl"
                         type="text" value={tasks[i]}
                         placeholder={`Add a new task`}
                         onChange={(e) => {
