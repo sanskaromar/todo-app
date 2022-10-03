@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 
-
 export default function Todos() {
     const [tasks, setTasks] = useState([])
     const [status, setStatus] = useState([])
@@ -22,7 +21,7 @@ export default function Todos() {
                             }} />
                     }
 
-                    <input className="w-full rounded border-4 border-blue-300 px-2 py-1 text-blue-50 bg-gray-700 focus:bg-gray-900 focus:text-white focus:border-blue-200"
+                    <input className="w-full rounded-2xl border-4 border-blue-300 px-2 py-1 text-gray-800 bg-gray-300 focus:bg-gray-400 focus:text-white focus:border-blue-200 text-3xl"
                         type="text" value={tasks[i]}
                         placeholder={`Add a new task`}
                         onChange={(e) => {
@@ -32,13 +31,14 @@ export default function Todos() {
                     {/* Delete Button */}
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
-                        className='h-10 w-10 px-2 hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 rounded-full flex-shrink-0'
+                        className='h-10 w-10 px-2 hover:bg-red-600 cursor-pointer bg-gray-900 bg-opacity-0 rounded-full flex-shrink-0'
                         fill='none'
                         viewBox='0 0 24 24'
                         stroke='white'
                         onClick={(e) => {
                             setTasks(tasks.filter((task, index) => index !== i))
                             setStatus(status.filter((stat, index) => index !== i))
+                            
                         }}>
                         <path
                             strokeLinecap='round'
@@ -79,14 +79,14 @@ export default function Todos() {
     return (
         <div className="flex flex-col items-center">
             <button
-                className='mx-auto p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+                className='mx-auto p-1 mb-2 text-green-600 text-4xl text-bold rounded-md hover:bg-green-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
                 onClick={handleClick}>
                 Save
             </button>
             {addTasks}
             {/* Add more tasks fields button */}
             <button
-                className='h-10 w-10 mx-auto text-white text-4xl  hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 rounded-full flex-shrink-0'
+                className='h-10 w-10 mx-auto text-green-600 text-4xl hover:bg-green-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 rounded-full flex-shrink-0'
                 onClick={() => {
                     setTasks([...tasks, ""])
                     setStatus([...status, 0])
