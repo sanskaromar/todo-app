@@ -6,6 +6,7 @@ export default function Todos() {
     const [tasks, setTasks] = useState([])
     const [status, setStatus] = useState([])
     const addTasks = []
+    const [flag,setFlag] = useState(0)
 
     for (let i = 0; i < tasks.length; i++) {
         addTasks.push(
@@ -61,23 +62,33 @@ export default function Todos() {
         return JSON.parse(this.getItem(key))
     }
 
-    const handleClick = () => {
+    const save = () => {
         localStorage.setObj("tasks", tasks);
         localStorage.setObj("status", status);
     }
 
-    const clear = (e) => {
-        localStorage.clear()
-        setTasks(["Add your first Task", "Track progress with checkbox", "Delete tasks when not required", "", ""]);
-        setStatus([1, 1, 0, 0, 0]);
+    const clear = () => {
+        setTasks(["Add a new Task"]);
+        setStatus([0]);
+        setFlag(1);        
     }
 
+    useEffect(() => {
+        if (flag === 1) {
+            localStorage.setObj("tasks", tasks);
+            localStorage.setObj("status", status);
+            setFlag(0);
+        }
+        // eslint-disable-next-line
+    },[flag])
+    
     const signOut = () => {
         localStorage.clear()
         history.push("/")
     }
 
     useEffect(() => {
+        
         if (localStorage.getObj("tasks") && localStorage.getObj("status")) {
             setTasks(localStorage.getObj("tasks"));
             setStatus(localStorage.getObj("status"));
@@ -94,7 +105,7 @@ export default function Todos() {
             <div className="flex-row">
                 <button
                     className = 'mx-3 p-1 mb-2 text-green-400 text-2xl rounded-sm hover:bg-opacity-25 cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
-                    onClick = {handleClick}>
+                    onClick = {save}>
                     Save
                 </button>
                 <button
