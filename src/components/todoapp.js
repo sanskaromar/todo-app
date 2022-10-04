@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 
 export default function Todos() {
 	const [tasks, setTasks] = useState([])
+	const [creationTimes, setCreationTimes] = useState([])
 	const [status, setStatus] = useState([])
 	const addTasks = []
 
@@ -13,7 +14,7 @@ export default function Todos() {
 	for (let i = 0; i < tasks.length; i++) {
 		addTasks.push(
 			<>
-				<div className='flex flex-row mb-2 w-full items-center md:w-2/3 lg:w-1/2'>
+				<div className='flex relative flex-row mb-2 w-full items-center md:w-2/3 lg:w-1/2'>
 					{status[i] === 0 ? (
 						<input
 							type='checkbox'
@@ -42,7 +43,7 @@ export default function Todos() {
 						type='text'
 						value={tasks[i]}
 						placeholder={`Add a new task`}
-                        rows='1'
+						rows='1'
 						onChange={(e) => {
 							setTasks(
 								tasks.map((task, index) =>
@@ -54,6 +55,9 @@ export default function Todos() {
 							textAreaAdjust(e)
 						}}
 					/>
+					<span className='text-gray-700 absolute right-12 pr-1 bottom-1 text-sm'>
+						{creationTimes[i]}
+					</span>
 					{/* Delete Button */}
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
@@ -63,6 +67,9 @@ export default function Todos() {
 						stroke='white'
 						onClick={(e) => {
 							setTasks(tasks.filter((task, index) => index !== i))
+							setCreationTimes(
+								creationTimes.filter((time, index) => index !== i)
+							)
 							setStatus(status.filter((stat, index) => index !== i))
 						}}>
 						<path
@@ -86,12 +93,29 @@ export default function Todos() {
 
 	const handleClick = () => {
 		localStorage.setObj("tasks", tasks)
+		localStorage.setObj("creationTimes", creationTimes)
 		localStorage.setObj("status", status)
 	}
 
+	const getTime = () => {
+		return new Date().toLocaleString([], {
+			day: "numeric",
+			month: "short",
+			year: "numeric",
+			hour: "2-digit",
+			minute: "2-digit",
+			// second: "2-digit",
+		})
+	}
+
 	useEffect(() => {
-		if (localStorage.getObj("tasks") && localStorage.getObj("status")) {
+		if (
+			localStorage.getObj("tasks") &&
+			localStorage.getObj("status") &&
+			localStorage.getObj("creationTimes")
+		) {
 			setTasks(localStorage.getObj("tasks"))
+			setCreationTimes(localStorage.getObj("creationTimes"))
 			setStatus(localStorage.getObj("status"))
 		} else {
 			setTasks([
@@ -101,6 +125,7 @@ export default function Todos() {
 				"",
 				"",
 			])
+			setCreationTimes([getTime(), getTime(), getTime(), getTime(), getTime()])
 			setStatus([1, 1, 0, 0, 0])
 		}
 	}, [])
@@ -119,6 +144,7 @@ export default function Todos() {
 				onClick={() => {
 					setTasks([...tasks, ""])
 					setStatus([...status, 0])
+					setCreationTimes([...creationTimes, getTime()])
 				}}>
 				+
 			</button>
