@@ -10,9 +10,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <header className="text-center text-5xl p-8 font-mono bg-blue-200  text-green-500">
-        To Do App
-      </header>
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/todo" component={Todo} exact />
