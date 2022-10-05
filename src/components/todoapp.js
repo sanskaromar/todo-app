@@ -46,8 +46,8 @@ export default function Todos() {
 					)}
 
 					<textarea
-						className="w-full resize-none overflow-hidden rounded-2xl border-4 border-blue-300 px-2 py-1 text-gray-800 bg-gray-300 focus:bg-gray-400 focus:text-white focus:border-blue-200 text-3xl"
-						type="text"
+						className='w-full resize-none overflow-hidden rounded-2xl border-4 border-blue-300 px-2 py-1 text-gray-800 bg-gray-300 focus:bg-gray-400 focus:text-white focus:border-blue-200 text-3xl dark:bg-gray-700 dark:text-white'
+						type='text'
 						value={tasks[i]}
 						placeholder={`Add a new task`}
 						rows="1"
@@ -145,6 +145,7 @@ export default function Todos() {
 
 	const signOut = () => {
 		localStorage.clear()
+		document.querySelector("#main").classList.remove("dark")
 		history.push('/')
 	}
 
