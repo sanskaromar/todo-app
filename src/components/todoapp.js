@@ -16,13 +16,15 @@ export default function Todos() {
     event.target.style.height = "1px";
     event.target.style.height = 10 + event.target.scrollHeight + "px";
   };
+  console.log("🚀 ~ Todos ~ labels", labels);
+  console.log("🚀 ~ Todos ~ taskLabels", taskLabels);
 
   for (let i = 0; i < tasks.length; i++) {
     addTasks.push(
       <>
         <div
           className="flex relative flex-row mb-2 w-full items-center md:w-2/3"
-          style={{ display: check == true ? " " : "none" }}
+          style={{ display: check === true ? " " : "none" }}
         >
           {status[i] === 0 ? (
             <input
@@ -48,7 +50,7 @@ export default function Todos() {
           )}
 
           <textarea
-            className="w-full resize-none overflow-hidden rounded-2xl border-4 border-blue-300 px-2 py-1 text-gray-800 bg-gray-300 focus:bg-gray-400 focus:text-white focus:border-blue-200 text-3xl"
+            className="w-full resize-none overflow-hidden rounded-2xl border-4 border-blue-300 px-2 py-1 text-gray-800 bg-gray-300 focus:bg-gray-400 focus:text-white focus:border-blue-200 text-3xl dark:bg-gray-700 dark:text-white"
             type="text"
             value={tasks[i]}
             placeholder={`Add a new task`}
@@ -147,6 +149,7 @@ export default function Todos() {
 
   const signOut = () => {
     localStorage.clear();
+    document.querySelector("#main").classList.remove("dark");
     history.push("/");
   };
 
@@ -185,8 +188,7 @@ export default function Todos() {
       setCreationTimes([getTime(), getTime(), getTime(), getTime(), getTime()]);
       setStatus([1, 1, 0, 0, 0]);
       setLabels(["In Progress", "On Hold", "High Priority", "Less Priority"]);
-      setTaskLabels([0]);
-      setcheck(true);
+      setTaskLabels([0, 0, 0, 0, 0]);
     }
   }, []);
 
@@ -257,7 +259,14 @@ export default function Todos() {
       <div className="flex flex-col items-center justify-start md:w-1/5 space-y-3">
         <span className="text-blue-500 font-bold text-xl mr-auto">Labels</span>
         {labels.map((label, i) => (
-          <div className="flex flex-row items-center mr-auto" key={i}>
+          <div className="flex flex-row items-center mr-auto relative" key={i}>
+            <span className="text-bold text-xl bg-blue-500 px-2 absolute -left-8 rounded-xl">
+              {
+                taskLabels.filter(
+                  (labelIndex) => parseInt(labelIndex) === labels.indexOf(label)
+                ).length
+              }
+            </span>
             <input
               type="text"
               className="h-10 w-40 mx-auto text-center text-gray-700 text-xl rounded-md hover:bg-blue-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0"
