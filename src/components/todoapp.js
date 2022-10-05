@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react"
+import { useHistory } from 'react-router-dom'
 
 export default function Todos() {
+    const history = useHistory()
 	const [tasks, setTasks] = useState([])
 	const [creationTimes, setCreationTimes] = useState([])
 	const [status, setStatus] = useState([])
 	const [labels, setLabels] = useState([])
 	const [taskLabels, setTaskLabels] = useState([])
 	const addTasks = []
+  const [flag,setFlag] = useState(0)
 
 	const textAreaAdjust = (event) => {
 		event.target.style.height = "1px"
@@ -107,14 +110,39 @@ export default function Todos() {
 	Storage.prototype.getObj = function (key) {
 		return JSON.parse(this.getItem(key))
 	}
+  
+  const save = () => {
+      localStorage.setObj("tasks", tasks)
+      localStorage.setObj("creationTimes", creationTimes)
+      localStorage.setObj("status", status)
+      localStorage.setObj("labels", labels)
+      localStorage.setObj("taskLabels", taskLabels)
+  }
 
-	const handleClick = () => {
-		localStorage.setObj("tasks", tasks)
-		localStorage.setObj("creationTimes", creationTimes)
-		localStorage.setObj("status", status)
-		localStorage.setObj("labels", labels)
-		localStorage.setObj("taskLabels", taskLabels)
-	}
+  const clear = () => {
+      setTasks(["Add a new Task"]);
+      setCreationTimes([getTime()]);
+      setStatus([0]);
+      setTaskLabels([0]);
+      setFlag(1);        
+  }
+
+  useEffect(() => {
+      if (flag === 1) {
+          localStorage.setObj("tasks", tasks)
+          localStorage.setObj("creationTimes", creationTimes)
+          localStorage.setObj("status", status)
+          localStorage.setObj("labels", labels)
+          localStorage.setObj("taskLabels", taskLabels)
+          setFlag(0);
+      }
+      // eslint-disable-next-line
+  },[flag])
+
+  const signOut = () => {
+      localStorage.clear()
+      history.push("/")
+  }
 
 	const getTime = () => {
 		return new Date().toLocaleString([], {
@@ -158,11 +186,18 @@ export default function Todos() {
 	return (
 		<div className='flex flex-col md:flex-row w-full'>
 			<div className='flex flex-col items-center md:w-4/5'>
-				<button
-					className='mx-auto p-1 mb-2 text-green-600 text-4xl text-bold rounded-md hover:bg-green-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
-					onClick={handleClick}>
-					Save
-				</button>
+				<div className="flex-row">
+                <button
+				    className='mx-3 p-1 mb-2 text-green-600 text-4xl text-bold rounded-md hover:bg-green-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+				    onClick={save}>
+				    Save
+			    </button>
+                <button
+				    className='mx-3 p-1 mb-2 text-green-600 text-4xl text-bold rounded-md hover:bg-green-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+				    onClick={clear}>
+				    Clear
+			    </button>
+            </div>
 				{addTasks}
 				{/* Add more tasks fields button */}
 				<button
@@ -175,6 +210,11 @@ export default function Todos() {
 					}}>
 					+
 				</button>
+        <button
+				    className='mx-auto p-1 mb-2 text-green-600 text-4xl text-bold rounded-md hover:bg-green-400 hover:text-white cursor-pointer bg-gray-100 bg-opacity-0 flex-shrink-0'
+				    onClick={signOut}>
+				    Sign Out
+			</button>
 			</div>
 			<div className='flex flex-col items-center justify-start md:w-1/5 space-y-3'>
 				<span className='text-blue-500 font-bold text-xl mr-auto'>Labels</span>
