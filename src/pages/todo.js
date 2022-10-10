@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react"
 import ToDos from "../components/todoapp"
+import ProgressBar from "../components/ProgressBar"
 
 export default function Todo() {
 	const [toggle, setToggle] = useState(true)
 	const [autoSave, setAutoSave] = useState(false)
+	const [percentage, setPercentage] = useState(0)
+
 	Storage.prototype.setObj = function (key, obj) {
 		return this.setItem(key, JSON.stringify(obj))
 	}
@@ -45,6 +48,7 @@ export default function Todo() {
 	const toggleClass = " transform translate-x-5"
 	return (
 		<div className='bg-blue-200 font-sans p-8 text-gray-300 min-h-screen dark:bg-gray-900'>
+			<ProgressBar percentage={percentage} />
 			<div className='flex space-x-5'>
 				<div className='flex space-x-2'>
 					<div
@@ -79,7 +83,7 @@ export default function Todo() {
 					<span className='text-gray-800 font-semibold'>Auto Save</span>
 				</div>
 			</div>
-			<ToDos autoSave={autoSave}/>
+			<ToDos autoSave={autoSave} setPercentage={setPercentage} />
 			<div className='m-8 p-8 text-2xl text-center text-yellow-800'>
 				Made with {"<3"} by Sanskar Omar
 			</div>

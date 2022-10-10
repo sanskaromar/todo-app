@@ -10,7 +10,15 @@ export default function Todos(props) {
 	const [taskLabels, setTaskLabels] = useState([])
 	const addTasks = []
 	const [flag, setFlag] = useState(0)
-	const { autoSave } = props
+	const { autoSave, setPercentage } = props
+
+	useEffect(() => {
+		const value = Math.floor(100 * status.filter(x => x === 1).length / status.length)
+		setPercentage(value)
+
+	}, [status, setPercentage])
+
+
 
 	const textAreaAdjust = (event) => {
 		event.target.style.height = "1px"
