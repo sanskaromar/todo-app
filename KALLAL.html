@@ -1,0 +1,117 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO-DO APP</title>
+    <link rel="stylesheet" href="Todo.css">
+</head>
+<body style="background: url('https://naujienos.vu.lt/wp-content/uploads/2023/11/VU-MIF-robotai-2-1536x1024.jpg');
+background-size: cover;
+background-image: -moz-radial-gradient(cover);
+background-repeat: no-repeat;
+height: auto;
+width: auto;">
+    <h1 id="main-heading" style=" background: linear-gradient(to right,green,rgb(212, 88, 26),gold,rgb(67, 67, 174), red, yellow,rgb(182, 8, 188));
+    -webkit-background-clip: text;
+    color: transparent;">TO-DO APP</h1>
+
+    <div class="container">
+        <header class="head-container">
+            <div class="text-center mb-2">
+            
+            </div>
+            <div class="text-center mb-2" style="color: black;">
+                <p id="date" style="color: black;">24th Sep</p>
+                <p id="day" style="color: black;">Wednesday</p>
+            </div>
+        </header>
+
+        <div class="grid-container">
+            <input id="todo-input" type="text" placeholder="Enter Todo here" autocomplete="off">
+            <input id="todo-date" type="date">
+            <button class='btn-todo' onclick="addTodo();">Add</button>
+        </div>
+
+        <ul id="todo-list" class="todo-container"></ul>
+
+        <div class="completed-todo-list">
+            <h3 style="color: black;">Completed Tasks</h3>
+            <div class="completed-todo-list-title" id="completed-todo-list-title">
+                <button class="btn btn-block text-left completed_title pl-0 text-white" onclick="toggleCompleted()">
+                    Completed 
+                    <div id="task_counter">(0)</div>
+                </button>
+            </div>
+            <div class="completed-todo-list-items" id="completed-todo-list-items"></div>
+        </div>
+    </div>
+
+    <script>
+        let completedCount = 0;
+
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const date = document.getElementById('todo-date');
+            const todoList = document.getElementById('todo-list');
+
+            if (input.value) {
+                const li = document.createElement('li');
+                li.style.display = 'flex';
+                li.style.justifyContent = 'space-between';
+                li.style.alignItems = 'center';
+
+                li.textContent = `${input.value} - ${date.value}`;
+                li.style.cursor = "pointer"; 
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.innerHTML = '<img src="https://img.icons8.com/ios-filled/50/000000/trash.png" alt="delete icon" />';
+                deleteBtn.onclick = function(event) {
+                    event.stopPropagation();  
+                    addToCompleted(li.textContent);
+                    li.remove();
+                };
+
+                li.appendChild(deleteBtn);
+
+                li.onclick = function() {
+                    li.classList.toggle("completed");
+                    completedCount += li.classList.contains("completed") ? 1 : -1;
+                    updateTaskCounter();
+                };
+
+                todoList.appendChild(li);
+                input.value = '';
+                date.value = '';
+            }
+        }
+
+        function addToCompleted(task) {
+            const completedList = document.getElementById('completed-todo-list-items');
+            const completedItem = document.createElement('div');
+            completedItem.textContent = task;
+            completedList.appendChild(completedItem);
+            completedCount++;
+            updateTaskCounter();
+        }
+
+        function updateTaskCounter() {
+            document.getElementById('task_counter').textContent = `(${completedCount})`;
+        }
+
+        function toggleCompleted() {
+            const completedList = document.getElementById('completed-todo-list-items');
+            completedList.style.display = completedList.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function DarkMode() {
+            var element = document.body;
+            element.classList.toggle("light");
+
+            var arrow = document.querySelector('.completed_title');
+            arrow.classList.toggle("light-arrow");
+        }
+    </script>
+</body>
+</html>
